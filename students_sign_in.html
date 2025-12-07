@@ -45,7 +45,7 @@
 
         <div id="student-list-table" class="card m-2 p-2">
             <h4 class="card-title">Student List</h4>
-            <h5>{{NumberOfStudents}} student in class</h5>
+            <h5>{{NumberOfStudents}} student in class</h5> <!--shows the numbner of students -->
             <div id="student-table">
                 <table class="table">
                     <thead>
@@ -62,6 +62,7 @@
                         When the checkbox is checked/unchecked, 
                         the student will be signed in/out -->
 
+                        <!--loop thought the sorted students -->
                         <tr v-for = " student in sortedStudent" v-bind:class="{present:student.present, absent:!student.present}">
                             <td>{{student.name}}</td>
                             <td>{{student.starID}}</td>
@@ -69,9 +70,9 @@
                                 <input type="checkbox" v-model ="student.present" v-on:change="arrivedOrLeft(student)">
                                 <span v-if ="student.present" class=" mx-3">Here!</span>
                                 <span v-else class="mx-3">Not present</span>
-                            </td> <!--check for present/absent-->
+                            </td> <!--check box for present-->
                             <td>
-                                <button v-on:click="deleteStudent(student)"class="btn btn-danger" >
+                                <button v-on:click="deleteStudent(student)"class="btn btn-danger" > <!-- delete button-->
                                     <i class ="bi bi-trash-fill"></i> Delete</button>
                             </td> <!--delete button-->
 
@@ -116,13 +117,14 @@
                 const newStudentName = ref('')
                 const newStarID = ref ('')
 
-                const studentList = ref([
+                const studentList = ref([ // list of students 
                    {name: 'A. Student', starID: 'aa123aa', present:false} ,
                    {name: 'B. Student', starID: 'bb123bb', present:false} 
                 ])
                 const formErrors = ref([])
                 const mostRecentStudent = ref({})
 
+                //add a new student
                 function addStudent(){
 
 
@@ -151,7 +153,7 @@
                 mostRecentStudent.value = student
 
                }
-               function deleteStudent(studentToDelete){
+               function deleteStudent(studentToDelete){ // delete a student
                 const studentListWithoutDeletedStudent = []
                 studentList.value.forEach(student =>{
                     if (student !=studentToDelete){
@@ -168,11 +170,11 @@
                 })
 
                })
-               const NumberOfStudents = computed(()=>{
+               const NumberOfStudents = computed(()=>{ // a computed property for number of students
                 return studentList.length
 
                })
-                return {
+                return { // return all data or methods to the template
                 studentList,
                 newStudentName,
                 newStarID,
